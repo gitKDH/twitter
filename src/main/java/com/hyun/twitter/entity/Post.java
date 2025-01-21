@@ -4,27 +4,36 @@ import java.time.LocalDateTime;
 
 public class Post {
 
-    private Integer postId;
-    private Integer userId;
+    private Long postId;
+    private Long userId;
+    private String title;
     private String content;
     private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Integer getPostId(){
+    public Long getPostId(){
         return postId;
     }
 
-    public void setPostId(Integer postId){
+    public void setPostId(Long postId){
         this.postId = postId;
     }
 
-    public Integer getUserId(){
+    public Long getUserId(){
         return userId;
     }
 
-    public void setUserId(Integer userId){
+    public void setUserId(Long userId){
         this.userId = userId;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
     }
 
     public String getContent(){
