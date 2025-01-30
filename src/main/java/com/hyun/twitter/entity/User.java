@@ -24,14 +24,6 @@ public class User {
         USER,ADMIN;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void markAsDeleted() {
         this.deletedAt = LocalDateTime.now();
     }
