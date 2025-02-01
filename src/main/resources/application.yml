@@ -1,0 +1,12 @@
+spring:
+  application:
+    name:
+      twitter
+  datasource:
+    url: jdbc:mysql://localhost:3306/twitter?useSSL=false&serverTimezone=UTC
+    username: root
+    password: qwe123@@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
