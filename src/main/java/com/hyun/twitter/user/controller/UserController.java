@@ -1,8 +1,8 @@
-package com.hyun.twitter.controller;
+package com.hyun.twitter.user.controller;
 
-import com.hyun.twitter.dto.UserDto;
-import com.hyun.twitter.entity.User;
-import com.hyun.twitter.service.UserService;
+import com.hyun.twitter.user.service.UserService;
+import com.hyun.twitter.user.dto.UserDto;
+import com.hyun.twitter.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

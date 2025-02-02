@@ -1,18 +1,15 @@
-package com.hyun.twitter.entity;
+package com.hyun.twitter.commentLike.entity;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class Comment {
+public class CommentLike {
 
+    private Long commentLikeId;
     private Long commentId;
-    private Long postId;
     private Long userId;
-    private String content;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-
+    private LocalDateTime deletedAt;
 }

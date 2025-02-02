@@ -1,4 +1,4 @@
-package com.hyun.twitter.entity;
+package com.hyun.twitter.follow.entity;
 
 import lombok.Data;
 

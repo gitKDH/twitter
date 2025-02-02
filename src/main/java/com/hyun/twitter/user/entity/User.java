@@ -1,12 +1,16 @@
-package com.hyun.twitter.dto;
+package com.hyun.twitter.user.entity;
 
-import com.hyun.twitter.entity.User;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
-public class UserDto {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+    //유효성 검사는 DTO나 서비스 계층에서 구현하기
+
     private Long userId;
     private String username;
     private String bio;
@@ -15,8 +19,13 @@ public class UserDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private User.Role role = User.Role.USER;
+    private Role role = Role.USER;
     public enum Role{
         USER,ADMIN;
     }
+
+    public void markAsDeleted() {
+        this.deletedAt = LocalDateTime.now();
+    }
+
 }

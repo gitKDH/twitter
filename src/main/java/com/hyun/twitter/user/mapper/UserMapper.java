@@ -1,6 +1,6 @@
-package com.hyun.twitter.mapper;
+package com.hyun.twitter.user.mapper;
 
-import com.hyun.twitter.entity.User;
+import com.hyun.twitter.user.entity.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
