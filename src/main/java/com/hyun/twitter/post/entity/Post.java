@@ -11,7 +11,7 @@ public class Post {
     private Long userId;
     private String title;
     private String content;
-    private String imageUrl;
+    private String imgUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
