@@ -3,7 +3,6 @@ package com.hyun.twitter.post.controller;
 import com.hyun.twitter.post.dto.PostDto;
 import com.hyun.twitter.post.entity.Post;
 import com.hyun.twitter.post.service.PostService;
-import com.hyun.twitter.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
