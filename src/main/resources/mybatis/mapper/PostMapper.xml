@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyun.twitter.post.mapper.PostMapper">
+    <insert id="addPost" parameterType="com.hyun.twitter.post.entity.Post">
+        insert into Posts
+        (post_id,
+         user_id,
+         title,
+         content,
+         img_url,
+         created_at)
+        values(
+                  #{postId},
+                  #{userId},
+                  #{title},
+                  #{content},
+                  #{imgUrl},
+                  #{createdAt}
+              )
+    </insert>
+</mapper>
