@@ -1,10 +1,13 @@
 package com.hyun.twitter.comment.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Comment {
 
     private Long commentId;
