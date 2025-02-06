@@ -18,7 +18,7 @@ public class CommentController {
 
     @PostMapping("/create")
     public int addComment(@RequestParam Long postId, @RequestParam Long userId, @RequestBody CommentDto commentDto) {
-        log.info("createPost by postId, userId: {}", postId, userId);
+        log.info("createPost by postId:{} userId:{}", postId, userId);
 
         Comment NewComment = Comment.builder()
                 .postId(postId)
