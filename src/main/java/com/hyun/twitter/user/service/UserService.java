@@ -4,4 +4,5 @@ import com.hyun.twitter.user.entity.User;
 
 public interface UserService {
     int addUser(User user);
+    int updateUser(User user);
 }
