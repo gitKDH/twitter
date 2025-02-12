@@ -32,6 +32,6 @@ public class UserServiceImpl implements UserService {
                 .password(user.getPassword() != null ? user.getPassword() : existingUser.getPassword())
                 .build();
 
-        return userMapper.updateUser(updateUser);
+        return userMapper.updateUser(user);
     }
 }
