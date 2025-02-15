@@ -24,10 +24,12 @@
               )
     </insert>
     <update id="updateUser" parameterType="com.hyun.twitter.user.entity.User">
-        update Users set
-                         username = #{username},
-                         bio = #{bio},
-                         password = #{password}
+        update Users
+        <set>
+            <if test="username != null"> username = #{username}, </if>
+            <if test="bio != null"> bio = #{bio}, </if>
+            <if test="password != null"> password = #{password}, </if>
+        </set>
         WHERE user_id = #{userId}
     </update>
     <select id="findById" parameterType="long" resultType="com.hyun.twitter.user.entity.User">
