@@ -32,9 +32,6 @@
         </set>
         WHERE user_id = #{userId}
     </update>
-    <select id="findById" parameterType="long" resultType="com.hyun.twitter.user.entity.User">
-        SELECT * FROM Users WHERE user_id = #{userId}
-    </select>
 </mapper>
 
 
