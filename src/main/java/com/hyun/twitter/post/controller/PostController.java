@@ -29,4 +29,18 @@ public class PostController {
 
         return postService.addPost(newPost);
     }
+
+    @PutMapping("/update")
+    public int updatePost(@RequestParam Long userId, @RequestBody PostDto post) {
+        log.info("updatePost by userId: {}", userId);
+
+        Post updatePost = Post.builder()
+                .postId(post.getPostId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .imgUrl(post.getImgUrl())
+                .build();
+
+        return postService.updatePost(updatePost);
+    }
 }

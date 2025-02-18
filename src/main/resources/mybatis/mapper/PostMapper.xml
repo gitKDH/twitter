@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyun.twitter.post.mapper.PostMapper">
+    <select id="findById" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
+        SELECT * FROM Posts WHERE post_id = #{postId}
+    </select>
     <insert id="addPost" parameterType="com.hyun.twitter.post.entity.Post">
         insert into Posts
         (post_id,
@@ -20,4 +23,14 @@
                   #{createdAt}
               )
     </insert>
+
+    <update id="updatePost" parameterType="com.hyun.twitter.post.entity.Post">
+        update Posts
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="imgUrl != null">imgUrl = #{imgUrl},</if>
+        </set>
+        where post_id = #{postId}
+    </update>
 </mapper>
