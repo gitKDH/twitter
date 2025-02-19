@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyun.twitter.post.mapper.PostMapper">
-    <select id="findById" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
+    <select id="findByPostId" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
         SELECT * FROM Posts WHERE post_id = #{postId}
     </select>
     <insert id="addPost" parameterType="com.hyun.twitter.post.entity.Post">

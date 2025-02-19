@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.*;
 public interface PostMapper {
     int addPost(Post post);
     int updatePost(Post post);
-    Post findById(@Param("postId") Long postId);
+    Post findByPostId(@Param("postId") Long postId);
 }
 

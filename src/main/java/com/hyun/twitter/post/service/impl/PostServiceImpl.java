@@ -20,7 +20,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int updatePost(Post post) {
-        Post existingPost = postMapper.findById(post.getPostId());
+        Post existingPost = postMapper.findByPostId(post.getPostId());
         if (existingPost == null) {
             throw new IllegalArgumentException("게시물을 찾을 수 없습니다.");
         }
