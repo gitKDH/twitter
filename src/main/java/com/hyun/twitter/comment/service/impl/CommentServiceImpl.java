@@ -25,6 +25,6 @@ public class CommentServiceImpl implements CommentService {
         Comment updateComment = Comment.builder()
                 .content(comment.getContent() != null ? comment.getContent() : existingComment.getContent())
                 .build();
-        return commentMapper.updateComment(comment);
+        return commentMapper.updateComment(existingComment);
     }
 }
