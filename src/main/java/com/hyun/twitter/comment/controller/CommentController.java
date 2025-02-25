@@ -30,4 +30,16 @@ public class CommentController {
         return commentService.addComment(NewComment);
     }
 
+    @PutMapping("/update")
+    public int updateComment(@RequestParam Long commentId, @RequestBody CommentDto commentDto) {
+        log.info("updateComment by commentId : {}", commentId);
+
+        Comment updateComment = Comment.builder()
+                .commentId(commentDto.getCommentId())
+                .content(commentDto.getContent())
+                .build();
+
+        return commentService.updateComment(updateComment);
+    }
+
 }

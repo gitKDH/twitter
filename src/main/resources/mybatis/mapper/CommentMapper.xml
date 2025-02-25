@@ -24,7 +24,7 @@
     <update id="updateComment" parameterType="com.hyun.twitter.comment.entity.Comment">
         update Comments
         <set>
-            <if test="content != null">content = #{content},</if>
+            <if test="content != null">content = #{content}</if>
         </set>
         where comment_id = #{commentId}
     </update>
