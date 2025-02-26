@@ -43,4 +43,10 @@ public class UserController {
                 .build();
         return userService.updateUser(updateUser);
     }
+
+    @DeleteMapping("/delete")
+    public int delete(@RequestParam Long userId) {
+        log.info("delete");
+        return userService.deleteUser(userId);
+    }
 }

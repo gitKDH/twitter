@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.*;
 public interface UserMapper {
     int addUser(User user);
     int updateUser(User user);
+    int deleteUser(@Param("userId") Long userId);
 
-    User findById(@Param("userId") Long userId);
+    User findByUserId(@Param("userId") Long userId);
+
 }
