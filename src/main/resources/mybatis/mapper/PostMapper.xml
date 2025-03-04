@@ -33,4 +33,7 @@
         </set>
         where post_id = #{postId}
     </update>
+    <delete id="deletePost" parameterType="Long">
+        delete from Posts where post_id = #{postId}
+    </delete>
 </mapper>

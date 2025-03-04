@@ -31,4 +31,14 @@ public class PostServiceImpl implements PostService {
                 .build();
         return postMapper.updatePost(post);
     }
+
+    @Override
+    public int deletePost(Long postId) {
+        Post existingPost = postMapper.findByPostId(postId);
+        if (existingPost == null) {
+            throw new IllegalArgumentException("게시물을 찾을 수 없습니다.");
+        }
+
+        return postMapper.deletePost(postId);
+    }
 }
