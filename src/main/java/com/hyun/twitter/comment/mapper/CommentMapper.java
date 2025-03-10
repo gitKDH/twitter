@@ -8,5 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface CommentMapper {
     int addComment(Comment comment);
     int updateComment(Comment comment);
+    int deleteComment(@Param("commentId") Long commentId);
+
     Comment findByCommentId(@Param("commentId") Long commentId);
 }

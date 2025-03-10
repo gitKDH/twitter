@@ -45,7 +45,7 @@ public class PostController {
     }
 
     @DeleteMapping("/delete")
-    public int delete(@RequestParam Long postId) {
+    public int deletePost(@RequestParam Long postId) {
         log.info("delete");
         return postService.deletePost(postId);
     }

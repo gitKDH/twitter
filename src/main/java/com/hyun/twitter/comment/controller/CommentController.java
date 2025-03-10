@@ -42,4 +42,10 @@ public class CommentController {
         return commentService.updateComment(updateComment);
     }
 
+    @DeleteMapping("/delete")
+    public int deleteComment(@RequestParam Long commentId) {
+        log.info("delete comment");
+        return commentService.deleteComment(commentId);
+    }
+
 }

@@ -28,4 +28,7 @@
         </set>
         where comment_id = #{commentId}
     </update>
+    <delete id="deleteComment" parameterType="Long">
+        delete from Comments where comment_id = #{commentId}
+    </delete>
 </mapper>
