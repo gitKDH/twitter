@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class follow {
+public class Follow {
 
     private Long followId;
     private Long followerId;
