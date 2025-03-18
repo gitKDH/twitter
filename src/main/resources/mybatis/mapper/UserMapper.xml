@@ -22,7 +22,7 @@
                #{bio},
                #{email},
                #{password},
-               #{createdAt},
+               now(),
                #{role}
               )
     </insert>

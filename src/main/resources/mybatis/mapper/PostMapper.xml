@@ -15,12 +15,12 @@
          img_url,
          created_at)
         values(
-                  #{postId},
-                  #{userId},
-                  #{title},
-                  #{content},
-                  #{imgUrl},
-                  #{createdAt}
+                #{postId},
+                #{userId},
+                #{title},
+                #{content},
+                #{imgUrl},
+                now()
               )
     </insert>
 
