@@ -1,15 +1,11 @@
-package com.hyun.twitter.follow.entity;
+package com.hyun.twitter.follow.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Follow {
-
+@Data
+public class FollowDto {
     private Long followId;
     private Long followerId;
     private Long followingId;

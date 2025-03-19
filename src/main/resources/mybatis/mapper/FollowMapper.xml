@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyun.twitter.follow.mapper.FollowMapper">
+    <insert id="followUser" parameterType="com.hyun.twitter.follow.entity.Follow">
+        insert into Follows
+        (follower_id,
+         following_id,
+         created_at)
+        values (
+                #{followerId},
+                #{followingId},
+                NOW()
+               )
+    </insert>
+</mapper>
