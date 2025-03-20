@@ -14,11 +14,11 @@
          content,
          created_at)
         values(
-                  #{commentId},
-                  #{userId},
-                  #{postId},
-                  #{content},
-                  #{createdAt}
+                #{commentId},
+                #{userId},
+                #{postId},
+                #{content},
+                now()
               )
     </insert>
     <update id="updateComment" parameterType="com.hyun.twitter.comment.entity.Comment">
