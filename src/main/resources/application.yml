@@ -10,3 +10,9 @@ spring:
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
+
+logging:
+  level:
+    root: info
+    org.mybatis: trace
+    org.apache.ibatis: trace
