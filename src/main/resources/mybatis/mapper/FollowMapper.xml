@@ -3,15 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyun.twitter.follow.mapper.FollowMapper">
+    <resultMap id="FollowResultMap" type="com.hyun.twitter.follow.entity.Follow">
+        <id column="follow_id" property="followId"/>
+        <result column="follower_id" property="followerId"/>
+        <result column="following_id" property="followingId"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <select id="findByFollowId" parameterType="java.lang.Long" resultMap="FollowResultMap">
+        SELECT * FROM follows WHERE follow_id = #{followId}
+    </select>
+
     <insert id="followUser" parameterType="com.hyun.twitter.follow.entity.Follow">
-        insert into Follows
-        (follower_id,
+        insert into follows
+        (follow_id,
+         follower_id,
          following_id,
          created_at)
         values (
+                #{followId},
                 #{followerId},
                 #{followingId},
                 NOW()
                )
     </insert>
+    <delete id="unfollowUser" parameterType="Long">
+        delete from follows where follow_id = #{followId}
+    </delete>
 </mapper>

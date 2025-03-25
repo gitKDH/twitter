@@ -5,10 +5,7 @@ import com.hyun.twitter.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -22,4 +19,12 @@ public class FollowController {
         followService.followUser(followerId, followingId);
         return ResponseEntity.ok("팔로우");
     }
+
+    @DeleteMapping("/unfollow")
+    public int unfollowUser(@RequestParam Long followId) {
+        log.info("unfollow");
+        return followService.unfollowUser(followId);
+    }
+
+
 }
