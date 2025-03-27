@@ -1,19 +1,14 @@
-package com.hyun.twitter.postLike.entity;
+package com.hyun.twitter.postLike.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class PostLike {
-
+@Data
+public class PostLikeDto {
     private Long postLikeId;
     private Long postId;
     private Long userId;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
-
 }
