@@ -1,4 +1,10 @@
 package com.hyun.twitter.postLike.mapper;
 
-public class PostLikeMapper {
+import com.hyun.twitter.postLike.entity.PostLike;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
+public interface PostLikeMapper {
+    void addPostLike(PostLike postLike);
 }

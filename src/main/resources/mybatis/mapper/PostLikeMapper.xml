@@ -4,5 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hyun.twitter.postLike.mapper.PostLikeMapper">
-
+    <resultMap id="PostLikeResultMap" type="com.hyun.twitter.postLike.entity.PostLike">
+        <id column="post_like_id" property="postLikeId"/>
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="deleted_at" property="deletedAt"/>
+    </resultMap>
+    <select id="findByPostLikeId" parameterType="java.lang.Long" resultMap="PostLikeResultMap">
+        SELECT * FROM PostLikes WHERE post_like_id = #{postLikeId}
+    </select>
+    <insert id="addPostLike" parameterType="com.hyun.twitter.postLike.entity.PostLike">
+        insert into Post_Likes
+        (post_id,
+         user_id,
+         created_at
+        )
+        values (
+                   #{postId},
+                   #{userId},
+                   NOW()
+               )
+    </insert>
 </mapper>

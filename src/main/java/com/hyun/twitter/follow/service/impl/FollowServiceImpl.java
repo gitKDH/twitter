@@ -35,11 +35,10 @@ public class FollowServiceImpl implements FollowService {
         Follow existingFollow = followMapper.findByFollowId(followId);
 
         if (existingFollow == null) {
-            log.warn("⚠ Follow ID {}가 존재하지만 MyBatis에서 엔티티 매핑이 안됨. resultMap 확인 필요!", followId);
+            log.warn("Follow ID {}가 존재하지만 MyBatis에서 엔티티 매핑이 안됨. resultMap 확인 필요!", followId);
             throw new IllegalArgumentException("팔로우 관계를 찾을 수 없습니다.");
         }
 
-        // ✅ 강제 디버깅 출력
         log.info("🔍 [unfollowUser] 반환된 Follow 객체: {}", existingFollow);
         log.info("🔍 [unfollowUser] Follow ID: {}", existingFollow.getFollowId());
         log.info("🔍 [unfollowUser] Follower ID: {}", existingFollow.getFollowerId());
