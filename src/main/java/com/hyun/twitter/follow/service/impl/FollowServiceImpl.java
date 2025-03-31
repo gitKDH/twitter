@@ -30,19 +30,18 @@ public class FollowServiceImpl implements FollowService {
     @Override
     @Transactional
     public int unfollowUser(Long followId) {
-        log.info("🔍 [unfollowUser] 찾는 followId: {}", followId);
+        log.info("찾는 followId: {}", followId);
 
         Follow existingFollow = followMapper.findByFollowId(followId);
 
         if (existingFollow == null) {
-            log.warn("Follow ID {}가 존재하지만 MyBatis에서 엔티티 매핑이 안됨. resultMap 확인 필요!", followId);
             throw new IllegalArgumentException("팔로우 관계를 찾을 수 없습니다.");
         }
 
-        log.info("🔍 [unfollowUser] 반환된 Follow 객체: {}", existingFollow);
-        log.info("🔍 [unfollowUser] Follow ID: {}", existingFollow.getFollowId());
-        log.info("🔍 [unfollowUser] Follower ID: {}", existingFollow.getFollowerId());
-        log.info("🔍 [unfollowUser] Following ID: {}", existingFollow.getFollowingId());
+        log.info("반환된 Follow 객체: {}", existingFollow);
+        log.info("Follow ID: {}", existingFollow.getFollowId());
+        log.info("Follower ID: {}", existingFollow.getFollowerId());
+        log.info("Following ID: {}", existingFollow.getFollowingId());
 
         return followMapper.unfollowUser(followId);
     }
