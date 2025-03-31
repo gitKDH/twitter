@@ -1,6 +1,7 @@
 package com.hyun.twitter.postLike.service.impl;
 
 
+import com.hyun.twitter.follow.entity.Follow;
 import com.hyun.twitter.postLike.entity.PostLike;
 import com.hyun.twitter.postLike.mapper.PostLikeMapper;
 import com.hyun.twitter.postLike.service.PostLikeService;
@@ -26,5 +27,20 @@ public class PostLikeServiceImpl implements PostLikeService {
                 .createdAt(LocalDateTime.now())
                 .build();
         postLikeMapper.addPostLike(postLike);
+    }
+
+    @Override
+    @Transactional
+    public int unlikePost(Long postLikeId) {
+        log.info("찾는 postLikeId: {}", postLikeId);
+
+        PostLike existingPostLike = postLikeMapper.findByPostLikeId(postLikeId);
+
+        if (existingPostLike == null) {
+            throw new IllegalArgumentException("좋아요 관계를 찾을 수 없습니다.");
+        }
+
+        log.info("반환된 PostLike 객체: {}", existingPostLike);
+        return postLikeMapper.unlikePost(postLikeId);
     }
 }

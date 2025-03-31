@@ -4,10 +4,7 @@ import com.hyun.twitter.postLike.service.PostLikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,5 +17,11 @@ public class PostLikeController {
     public ResponseEntity<String> postLike(@RequestParam Long postId, @RequestParam Long userId) {
         postLikeService.addPostLike(postId, userId);
         return ResponseEntity.ok("게시물 좋아요");
+    }
+
+    @DeleteMapping("/unlikepost")
+    public int unlikePost(@RequestParam Long postLikeId) {
+        log.info("unlikePost");
+        return postLikeService.unlikePost(postLikeId);
     }
 }

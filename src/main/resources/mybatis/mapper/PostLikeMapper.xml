@@ -12,7 +12,7 @@
         <result column="deleted_at" property="deletedAt"/>
     </resultMap>
     <select id="findByPostLikeId" parameterType="java.lang.Long" resultMap="PostLikeResultMap">
-        SELECT * FROM PostLikes WHERE post_like_id = #{postLikeId}
+        SELECT * FROM Post_likes WHERE post_like_id = #{postLikeId}
     </select>
     <insert id="addPostLike" parameterType="com.hyun.twitter.postLike.entity.PostLike">
         insert into Post_Likes
@@ -26,4 +26,7 @@
                    NOW()
                )
     </insert>
+    <delete id="unlikePost" parameterType="Long">
+        delete from Post_likes where post_like_id = #{postLikeId}
+    </delete>
 </mapper>
