@@ -17,7 +17,7 @@ public class PostLikeController {
     private final PostLikeService postLikeService;
 
     @PostMapping("/addpostlike")
-    public ResponseEntity<String> commentLike(@RequestParam Long postId, @RequestParam Long userId) {
+    public ResponseEntity<String> postLike(@RequestParam Long postId, @RequestParam Long userId) {
         postLikeService.addPostLike(postId, userId);
         return ResponseEntity.ok("게시물 좋아요");
     }
