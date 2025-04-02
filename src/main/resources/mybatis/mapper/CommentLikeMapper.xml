@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hyun.twitter.commentLike.mapper.CommentLikeMapper">
+    <resultMap id="CommentLikeResultMap" type="com.hyun.twitter.commentLike.entity.CommentLike">
+        <id column="comment_like_id" property="commentLikeId"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="user_id" property="userId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="deleted_at" property="deletedAt"/>
+    </resultMap>
+    <select id="findByCommentLikeId" parameterType="java.lang.Long" resultMap="CommentLikeResultMap">
+        SELECT * FROM Comment_likes WHERE comment_like_id = #{commentLikeId}
+    </select>
+    <insert id="addCommentLike" parameterType="com.hyun.twitter.commentLike.entity.CommentLike">
+        insert into Comment_Likes
+        (comment_id,
+         user_id,
+         created_at
+        )
+        values (
+                   #{commentId},
+                   #{userId},
+                   NOW()
+               )
+    </insert>
+    <delete id="unlikeComment" parameterType="Long">
+        delete from Comment_likes where comment_like_id = #{commentLikeId}
+    </delete>
+</mapper>
