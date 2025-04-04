@@ -1,16 +1,11 @@
-package com.hyun.twitter.passwordHistory.entity;
+package com.hyun.twitter.passwordHistory.dto;
 
-
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class PasswordHistory {
-
+@Data
+public class PasswordHistoryDto {
     private Long historyId;
     private Long userId;
     private String passwordHash;
