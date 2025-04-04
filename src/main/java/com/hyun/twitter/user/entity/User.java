@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class User {
-    //유효성 검사는 DTO나 서비스 계층에서 구현하기
 
     private Long userId;
     private String username;
@@ -22,10 +21,6 @@ public class User {
     private Role role = Role.USER;
     public enum Role{
         USER,ADMIN;
-    }
-
-    public void markAsDeleted() {
-        this.deletedAt = LocalDateTime.now();
     }
 
 }
