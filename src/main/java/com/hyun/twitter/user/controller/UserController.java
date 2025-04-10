@@ -1,5 +1,6 @@
 package com.hyun.twitter.user.controller;
 
+import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.service.UserService;
 import com.hyun.twitter.user.dto.UserDto;
 import com.hyun.twitter.user.entity.User;
@@ -17,19 +18,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public int create(@RequestBody UserDto user) {
-        log.info("create");
-        User newUser = User.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .bio(user.getBio())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .createdAt(LocalDateTime.now())
-                .role(user.getRole())
-                .build();
-
-        return userService.addUser(newUser);
+    public int create(@RequestBody UserRequestDto requestDto) {
+        log.info("회원가입 요청: {}", requestDto);
+        return userService.addUser(requestDto);
     }
 
     @PutMapping("/update")

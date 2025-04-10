@@ -1,20 +1,35 @@
 package com.hyun.twitter.user.service.impl;
 
+import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.entity.User;
 import com.hyun.twitter.user.mapper.UserMapper;
 import com.hyun.twitter.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
-    public int addUser(User user) {
+    public int addUser(UserRequestDto requestDto) {
+        String hashedPassword = passwordEncoder.encode(requestDto.getPassword());
+
+        User user = User.builder()
+                .username(requestDto.getUsername())
+                .email(requestDto.getEmail())
+                .password(hashedPassword)
+                .createdAt(LocalDateTime.now())
+                .role(User.Role.USER)
+                .build();
+
         return userMapper.addUser(user);
     }
 
