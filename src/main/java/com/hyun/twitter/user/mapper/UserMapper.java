@@ -10,5 +10,6 @@ public interface UserMapper {
     int deleteUser(@Param("userId") Long userId);
 
     User findByUserId(@Param("userId") Long userId);
+    User findByUsername(@Param("username") String username);
 
 }
