@@ -1,11 +1,14 @@
 package com.hyun.twitter.user.controller;
 
+import com.hyun.twitter.user.dto.LoginRequestDto;
 import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.service.UserService;
 import com.hyun.twitter.user.dto.UserDto;
 import com.hyun.twitter.user.entity.User;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -39,5 +42,12 @@ public class UserController {
     public int delete(@RequestParam Long userId) {
         log.info("delete");
         return userService.deleteUser(userId);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        String token = userService.login(loginRequestDto);
+        response.setHeader("Authorization", "Bearer " + token);
+        return ResponseEntity.ok("로그인 성공");
     }
 }
