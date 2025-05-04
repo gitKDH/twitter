@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll() // 로그인, 회원가입 허용
+                        .requestMatchers("/api/**").permitAll() // 모두 허용 임시
                         .anyRequest().authenticated() // 나머지는 인증 필요
                 );
 
