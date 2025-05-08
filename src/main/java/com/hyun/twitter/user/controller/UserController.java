@@ -2,6 +2,7 @@ package com.hyun.twitter.user.controller;
 
 import com.hyun.twitter.user.dto.LoginRequestDto;
 import com.hyun.twitter.user.dto.UserRequestDto;
+import com.hyun.twitter.user.dto.UserResponseDto;
 import com.hyun.twitter.user.service.UserService;
 import com.hyun.twitter.user.dto.UserDto;
 import com.hyun.twitter.user.entity.User;
@@ -9,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -49,5 +52,11 @@ public class UserController {
         String token = userService.login(loginRequestDto);
         response.setHeader("Authorization", "Bearer " + token);
         return ResponseEntity.ok("로그인 성공");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        return ResponseEntity.ok(new UserResponseDto(username));
     }
 }
