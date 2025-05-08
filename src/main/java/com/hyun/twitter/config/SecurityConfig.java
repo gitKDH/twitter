@@ -34,15 +34,19 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll() // 모두 허용 임시
-                        .anyRequest().authenticated() // 나머지는 인증 필요
+                        .requestMatchers("/api/user/login", "/api/user/create").permitAll()
+                        .requestMatchers("/api/user/me").authenticated() // 먼저 인증 필요 설정
+                        .requestMatchers("/api/**").permitAll() // 그 외 나머지는 임시 허용
+                        .anyRequest().authenticated()
                 )
 
-                .addFilterBefore(
-                        new JwtAuthenticationFilter(jwtUtil, userDetailsService),
-                        UsernamePasswordAuthenticationFilter.class
-                );
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtUtil, userDetailsService);
     }
 }
