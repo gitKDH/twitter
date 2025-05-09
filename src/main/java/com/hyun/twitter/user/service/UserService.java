@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserService {
     int addUser(UserRequestDto requestDto);
-    int updateUser(User user);
     int deleteUser(@Param("userId") Long userId);
     String login(LoginRequestDto loginRequestDto);
 }

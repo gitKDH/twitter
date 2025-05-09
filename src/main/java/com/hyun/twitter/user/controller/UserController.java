@@ -29,18 +29,6 @@ public class UserController {
         return userService.addUser(requestDto);
     }
 
-    @PutMapping("/update")
-    public int update(@RequestBody UserDto user) {
-        log.info("update");
-        User updateUser = User.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .bio(user.getBio())
-                .password(user.getPassword())
-                .build();
-        return userService.updateUser(updateUser);
-    }
-
     @DeleteMapping("/delete")
     public int delete(@RequestParam Long userId) {
         log.info("delete");

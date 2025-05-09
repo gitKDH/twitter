@@ -37,17 +37,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public int updateUser(User user) {
-        User existingUser = userMapper.findByUserId(user.getUserId());
-        if (existingUser == null) {
-            throw new IllegalArgumentException("유저를 찾을 수 없습니다.");
-        }
-
-        return userMapper.updateUser(user);
-    }
-
-    @Override
     public int deleteUser(Long userId) {
         User existingUser = userMapper.findByUserId(userId);
         if (existingUser == null) {

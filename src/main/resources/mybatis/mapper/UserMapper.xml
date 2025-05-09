@@ -32,16 +32,6 @@
                #{role}
               )
     </insert>
-    <update id="updateUser" parameterType="com.hyun.twitter.user.entity.User">
-        update Users
-        <set>
-            <if test="username != null"> username = #{username}, </if>
-            <if test="bio != null"> bio = #{bio}, </if>
-            <if test="password != null"> password = #{password}, </if>
-        </set>
-        WHERE user_id = #{userId}
-    </update>
-
     <delete id="deleteUser" parameterType="Long">
         delete from Users where user_id = #{userId}
     </delete>
