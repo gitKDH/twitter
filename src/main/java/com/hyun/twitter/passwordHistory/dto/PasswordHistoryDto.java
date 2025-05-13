@@ -9,5 +9,5 @@ public class PasswordHistoryDto {
     private Long historyId;
     private Long userId;
     private String passwordHash;
-    private LocalDateTime createdAt;
+    private LocalDateTime changedAt;
 }
