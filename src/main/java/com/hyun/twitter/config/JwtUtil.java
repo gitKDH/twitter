@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "ThisIsMostPowerfulSecretKeyInTheWorldHaHaHa";
+    private final String SECRET_KEY = "ThisIsMostPowerfulSecretKeyInTheWorldHaHaHaH";
     private final long EXPIRATION_TIME = 3600000;
 
     private Key getSigningKey() {
@@ -27,7 +27,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
