@@ -34,14 +34,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             try {
                 if (jwtUtil.validateToken(token)) {
-                    String username = jwtUtil.getUsernameFromToken(token);
+                    String email = jwtUtil.getEmailFromToken(token);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    log.info("JWT 인증 성공 - 사용자: {}", username);
+                    log.info("JWT 인증 성공 - 사용자: {}", email);
                 }
             } catch (Exception e) {
                 log.warn("JWT 인증 실패: {}", e.getMessage());
