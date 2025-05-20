@@ -1,11 +1,7 @@
 package com.hyun.twitter.user.controller;
 
-import com.hyun.twitter.user.dto.LoginRequestDto;
-import com.hyun.twitter.user.dto.UserRequestDto;
-import com.hyun.twitter.user.dto.UserResponseDto;
+import com.hyun.twitter.user.dto.*;
 import com.hyun.twitter.user.service.UserService;
-import com.hyun.twitter.user.dto.UserDto;
-import com.hyun.twitter.user.entity.User;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -27,6 +21,17 @@ public class UserController {
     public int create(@RequestBody UserRequestDto requestDto) {
         log.info("회원가입 요청: {}", requestDto);
         return userService.addUser(requestDto);
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<String> changePassword(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody PasswordChangeRequestDto requestDto) {
+
+        Long userId = userService.findByEmail(userDetails.getUsername()).getUserId();
+        userService.changePassword(userId, requestDto);
+
+        return ResponseEntity.ok("비밀번호 변경.");
     }
 
     @DeleteMapping("/delete")
