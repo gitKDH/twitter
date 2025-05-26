@@ -52,6 +52,15 @@
     <delete id="deleteUser" parameterType="Long">
         delete from Users where user_id = #{userId}
     </delete>
+
+    <update id="updateUserProfile" parameterType="com.hyun.twitter.user.entity.User">
+        UPDATE Users
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="bio != null">bio = #{bio}</if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
 </mapper>
 
 

@@ -2,6 +2,7 @@ package com.hyun.twitter.user.service;
 
 import com.hyun.twitter.user.dto.LoginRequestDto;
 import com.hyun.twitter.user.dto.PasswordChangeRequestDto;
+import com.hyun.twitter.user.dto.UserProfileUpdateRequestDto;
 import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.entity.User;
 import org.apache.ibatis.annotations.Param;
@@ -13,5 +14,7 @@ public interface UserService {
     int changePassword(Long userId, PasswordChangeRequestDto dto);
 
     User findByEmail(String email);
+
+    void updateUserProfile(String email, UserProfileUpdateRequestDto requestDto);
 
 }

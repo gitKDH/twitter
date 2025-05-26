@@ -5,6 +5,7 @@ import com.hyun.twitter.passwordHistory.entity.PasswordHistory;
 import com.hyun.twitter.passwordHistory.mapper.PasswordHistoryMapper;
 import com.hyun.twitter.user.dto.LoginRequestDto;
 import com.hyun.twitter.user.dto.PasswordChangeRequestDto;
+import com.hyun.twitter.user.dto.UserProfileUpdateRequestDto;
 import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.entity.User;
 import com.hyun.twitter.user.mapper.UserMapper;
@@ -109,6 +110,27 @@ public class UserServiceImpl implements UserService {
         }
 
         return jwtUtil.generateToken(user.getEmail());
+    }
+
+    @Override
+    @Transactional
+    public void updateUserProfile(String email, UserProfileUpdateRequestDto requestDto) {
+        User user = userMapper.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+
+        User updatedUser = User.builder()
+                .userId(user.getUserId())
+                .username(requestDto.getUsername() != null ? requestDto.getUsername() : user.getUsername())
+                .bio(requestDto.getBio() != null ? requestDto.getBio() : user.getBio())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .createdAt(user.getCreatedAt())
+                .role(user.getRole())
+                .build();
+
+        userMapper.updateUserProfile(updatedUser);
     }
 
 }

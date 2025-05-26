@@ -52,4 +52,15 @@ public class UserController {
         String username = userDetails.getUsername();
         return ResponseEntity.ok(new UserResponseDto(username));
     }
+
+    @PatchMapping("/profile")
+    public ResponseEntity<String> updateProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody UserProfileUpdateRequestDto requestDto) {
+
+        String email = userDetails.getUsername();
+        userService.updateUserProfile(email, requestDto);
+
+        return ResponseEntity.ok("프로필 수정.");
+    }
 }
