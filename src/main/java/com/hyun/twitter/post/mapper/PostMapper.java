@@ -14,5 +14,6 @@ public interface PostMapper {
 
     Post findByPostId(@Param("postId") Long postId);
     List<Post> findAllPosts();
+    List<Post> findPostsByFollowing(@Param("userId") Long userId);
 }
 

@@ -48,4 +48,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllPosts() {
         return postMapper.findAllPosts();
     }
+
+    @Override
+    public List<Post> getPostsByFollowing(Long userId) {
+        return postMapper.findPostsByFollowing(userId);
+    }
 }

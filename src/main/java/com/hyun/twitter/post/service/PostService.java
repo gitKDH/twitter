@@ -10,5 +10,6 @@ public interface PostService {
     int updatePost(Post post);
     int deletePost(@Param("postId") Long postId);
     List<Post> getAllPosts();
+    List<Post> getPostsByFollowing(Long userId);
 
 }

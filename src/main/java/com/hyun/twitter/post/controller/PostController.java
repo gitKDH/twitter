@@ -3,9 +3,11 @@ package com.hyun.twitter.post.controller;
 import com.hyun.twitter.post.dto.PostDto;
 import com.hyun.twitter.post.entity.Post;
 import com.hyun.twitter.post.service.PostService;
+import com.hyun.twitter.user.service.impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -55,5 +57,11 @@ public class PostController {
     @GetMapping("/feed")
     public ResponseEntity<List<Post>> getFeed() {
         return ResponseEntity.ok(postService.getAllPosts());
+    }
+
+    @GetMapping("/timeline")
+    public List<Post> getFollowFeed(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        return postService.getPostsByFollowing(userId);
     }
 }

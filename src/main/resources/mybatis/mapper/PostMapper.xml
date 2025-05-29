@@ -43,4 +43,12 @@
         SELECT * FROM Posts
         ORDER BY created_at DESC
     </select>
+
+    <select id="findPostsByFollowing" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
+        SELECT p.*
+        FROM posts p
+                 JOIN follows f ON p.user_id = f.following_id
+        WHERE f.follower_id = #{userId}
+        ORDER BY p.created_at DESC
+    </select>
 </mapper>
