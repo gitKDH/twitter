@@ -5,9 +5,11 @@ import com.hyun.twitter.post.entity.Post;
 import com.hyun.twitter.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -48,5 +50,10 @@ public class PostController {
     public int deletePost(@RequestParam Long postId) {
         log.info("delete");
         return postService.deletePost(postId);
+    }
+
+    @GetMapping("/feed")
+    public ResponseEntity<List<Post>> getFeed() {
+        return ResponseEntity.ok(postService.getAllPosts());
     }
 }

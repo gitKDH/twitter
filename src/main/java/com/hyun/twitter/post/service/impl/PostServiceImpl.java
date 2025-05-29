@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -40,5 +42,10 @@ public class PostServiceImpl implements PostService {
         }
 
         return postMapper.deletePost(postId);
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+        return postMapper.findAllPosts();
     }
 }

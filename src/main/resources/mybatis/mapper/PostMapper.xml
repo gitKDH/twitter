@@ -6,6 +6,7 @@
     <select id="findByPostId" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
         SELECT * FROM Posts WHERE post_id = #{postId}
     </select>
+
     <insert id="addPost" parameterType="com.hyun.twitter.post.entity.Post">
         insert into Posts
         (post_id,
@@ -33,7 +34,13 @@
         </set>
         where post_id = #{postId}
     </update>
+
     <delete id="deletePost" parameterType="Long">
         delete from Posts where post_id = #{postId}
     </delete>
+
+    <select id="findAllPosts" resultType="com.hyun.twitter.post.entity.Post">
+        SELECT * FROM Posts
+        ORDER BY created_at DESC
+    </select>
 </mapper>
