@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
         User user = User.builder()
                 .username(requestDto.getUsername())
+                .bio(requestDto.getBio())
                 .email(requestDto.getEmail())
                 .password(hashedPassword)
                 .createdAt(LocalDateTime.now())
