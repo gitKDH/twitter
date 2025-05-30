@@ -30,17 +30,7 @@ public class PostLikeServiceImpl implements PostLikeService {
     }
 
     @Override
-    @Transactional
-    public int unlikePost(Long postLikeId) {
-        log.info("찾는 postLikeId: {}", postLikeId);
-
-        PostLike existingPostLike = postLikeMapper.findByPostLikeId(postLikeId);
-
-        if (existingPostLike == null) {
-            throw new IllegalArgumentException("좋아요 관계를 찾을 수 없습니다.");
-        }
-
-        log.info("반환된 PostLike 객체: {}", existingPostLike);
-        return postLikeMapper.unlikePost(postLikeId);
+    public int unlikePost(Long postId, Long userId) {
+        return postLikeMapper.unlikePost(postId, userId);
     }
 }

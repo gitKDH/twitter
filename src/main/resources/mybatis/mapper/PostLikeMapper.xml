@@ -26,7 +26,8 @@
                    NOW()
                )
     </insert>
-    <delete id="unlikePost" parameterType="Long">
-        delete from Post_likes where post_like_id = #{postLikeId}
+    <delete id="unlikePost">
+        DELETE FROM post_likes
+        WHERE post_id = #{postId} AND user_id = #{userId}
     </delete>
 </mapper>

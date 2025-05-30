@@ -1,9 +1,11 @@
 package com.hyun.twitter.postLike.controller;
 
 import com.hyun.twitter.postLike.service.PostLikeService;
+import com.hyun.twitter.user.service.impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -20,8 +22,10 @@ public class PostLikeController {
     }
 
     @DeleteMapping("/unlikepost")
-    public int unlikePost(@RequestParam Long postLikeId) {
-        log.info("unlikePost");
-        return postLikeService.unlikePost(postLikeId);
+    public ResponseEntity<String> unlikePost(@RequestParam Long postId,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        postLikeService.unlikePost(postId, userId);
+        return ResponseEntity.ok("좋아요 취소");
     }
 }

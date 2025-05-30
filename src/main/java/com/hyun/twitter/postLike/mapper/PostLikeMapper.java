@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface PostLikeMapper {
     void addPostLike(PostLike postLike);
     PostLike findByPostLikeId(@Param("postLikeId") Long postLikeId);
-    int unlikePost(@Param("postLikeId") Long postLikeId);
+    int unlikePost(@Param("postId") Long postId, @Param("userId") Long userId);
 }
