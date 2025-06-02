@@ -33,4 +33,9 @@ public class PostLikeServiceImpl implements PostLikeService {
     public int unlikePost(Long postId, Long userId) {
         return postLikeMapper.unlikePost(postId, userId);
     }
+
+    @Override
+    public int countPostLikes(Long postId) {
+        return postLikeMapper.countPostLikes(postId);
+    }
 }

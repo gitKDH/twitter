@@ -28,4 +28,10 @@ public class PostLikeController {
         postLikeService.unlikePost(postId, userId);
         return ResponseEntity.ok("좋아요 취소");
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countPostLikes(@RequestParam Long postId) {
+        int likeCount = postLikeService.countPostLikes(postId);
+        return ResponseEntity.ok(likeCount);
+    }
 }
