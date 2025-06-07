@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -37,5 +38,10 @@ public class PostLikeServiceImpl implements PostLikeService {
     @Override
     public int countPostLikes(Long postId) {
         return postLikeMapper.countPostLikes(postId);
+    }
+
+    @Override
+    public List<String> getUsernamesWhoLikedPost(Long postId) {
+        return postLikeMapper.findUsernamesWhoLikedPost(postId);
     }
 }

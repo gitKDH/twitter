@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -33,5 +35,11 @@ public class PostLikeController {
     public ResponseEntity<Integer> countPostLikes(@RequestParam Long postId) {
         int likeCount = postLikeService.countPostLikes(postId);
         return ResponseEntity.ok(likeCount);
+    }
+
+    @GetMapping("/liked-users")
+    public ResponseEntity<List<String>> getUsersWhoLikedPost(@RequestParam Long postId) {
+        List<String> usernames = postLikeService.getUsernamesWhoLikedPost(postId);
+        return ResponseEntity.ok(usernames);
     }
 }

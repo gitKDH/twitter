@@ -34,4 +34,12 @@
     <select id="countPostLikes" parameterType="long" resultType="int">
         SELECT COUNT(*) FROM post_likes WHERE post_id = #{postId}
     </select>
+
+    <select id="findUsernamesWhoLikedPost" parameterType="long" resultType="string">
+        SELECT u.username
+        FROM post_likes pl
+                 JOIN users u ON pl.user_id = u.user_id
+        WHERE pl.post_id = #{postId}
+    </select>
+
 </mapper>
