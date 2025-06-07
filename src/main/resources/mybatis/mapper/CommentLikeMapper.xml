@@ -29,4 +29,11 @@
     <delete id="unlikeComment" parameterType="Long">
         delete from Comment_likes where comment_like_id = #{commentLikeId}
     </delete>
+
+    <select id="findUsernamesWhoLikedComment" parameterType="long" resultType="string">
+        SELECT u.username
+        FROM comment_likes cl
+                 JOIN users u ON cl.user_id = u.user_id
+        WHERE cl.comment_id = #{commentId}
+    </select>
 </mapper>

@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +25,11 @@ public class CommentLikeController {
     public int unlikeComment(@RequestParam Long commentLikeId) {
         log.info("unlikeComment");
         return commentLikeService.unlikeComment(commentLikeId);
+    }
+
+    @GetMapping("/liked-users")
+    public ResponseEntity<List<String>> getUsersWhoLikedComment(@RequestParam Long commentId) {
+        List<String> usernames = commentLikeService.getUsernamesWhoLikedComment(commentId);
+        return ResponseEntity.ok(usernames);
     }
 }

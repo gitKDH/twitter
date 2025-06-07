@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -40,5 +41,10 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 
         log.info("반환된 CommentLike 객체: {}", existingCommentLike);
         return commentLikeMapper.unlikeComment(commentLikeId);
+    }
+
+    @Override
+    public List<String> getUsernamesWhoLikedComment(Long commentId) {
+        return commentLikeMapper.findUsernamesWhoLikedComment(commentId);
     }
 }
