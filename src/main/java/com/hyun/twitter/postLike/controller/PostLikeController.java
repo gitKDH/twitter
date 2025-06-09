@@ -42,4 +42,12 @@ public class PostLikeController {
         List<String> usernames = postLikeService.getUsernamesWhoLikedPost(postId);
         return ResponseEntity.ok(usernames);
     }
+
+    @GetMapping("/liked")
+    public ResponseEntity<Boolean> hasUserLikedPost(@RequestParam Long postId,
+                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        boolean liked = postLikeService.hasUserLikedPost(postId, userId);
+        return ResponseEntity.ok(liked);
+    }
 }

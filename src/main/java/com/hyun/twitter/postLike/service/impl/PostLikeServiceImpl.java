@@ -44,4 +44,9 @@ public class PostLikeServiceImpl implements PostLikeService {
     public List<String> getUsernamesWhoLikedPost(Long postId) {
         return postLikeMapper.findUsernamesWhoLikedPost(postId);
     }
+
+    @Override
+    public boolean hasUserLikedPost(Long postId, Long userId) {
+        return postLikeMapper.hasUserLikedPost(postId, userId);
+    }
 }

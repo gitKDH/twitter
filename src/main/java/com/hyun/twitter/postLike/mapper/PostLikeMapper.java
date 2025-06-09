@@ -13,4 +13,5 @@ public interface PostLikeMapper {
     int unlikePost(@Param("postId") Long postId, @Param("userId") Long userId);
     int countPostLikes(@Param("postId") Long postId);
     List<String> findUsernamesWhoLikedPost(@Param("postId") Long postId);
+    boolean hasUserLikedPost(@Param("postId") Long postId, @Param("userId") Long userId);
 }

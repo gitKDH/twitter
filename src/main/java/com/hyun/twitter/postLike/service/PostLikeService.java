@@ -9,4 +9,5 @@ public interface PostLikeService {
     int unlikePost(@Param("postId") Long postId, @Param("userId") Long userId);
     int countPostLikes(Long postId);
     List<String> getUsernamesWhoLikedPost(Long postId);
+    boolean hasUserLikedPost(Long postId, Long userId);
 }

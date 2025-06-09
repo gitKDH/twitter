@@ -42,4 +42,11 @@
         WHERE pl.post_id = #{postId}
     </select>
 
+    <select id="hasUserLikedPost" parameterType="map" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1 FROM post_likes
+            WHERE post_id = #{postId} AND user_id = #{userId}
+        )
+    </select>
+
 </mapper>
