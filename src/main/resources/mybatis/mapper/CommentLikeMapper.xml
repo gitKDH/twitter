@@ -36,4 +36,11 @@
                  JOIN users u ON cl.user_id = u.user_id
         WHERE cl.comment_id = #{commentId}
     </select>
+
+    <select id="hasUserLikedComment" parameterType="map" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1 FROM comment_likes
+            WHERE comment_id = #{commentId} AND user_id = #{userId}
+        )
+    </select>
 </mapper>

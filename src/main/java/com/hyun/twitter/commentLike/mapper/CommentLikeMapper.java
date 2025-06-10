@@ -12,4 +12,5 @@ public interface CommentLikeMapper {
     CommentLike findByCommentLikeId(@Param("commentLikeId") Long commentLikeId);
     int unlikeComment(@Param("commentLikeId") Long commentLikeId);
     List<String> findUsernamesWhoLikedComment(@Param("commentId") Long commentId);
+    boolean hasUserLikedComment(@Param("commentId") Long commentId, @Param("userId") Long userId);
 }

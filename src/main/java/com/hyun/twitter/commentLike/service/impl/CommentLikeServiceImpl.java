@@ -47,4 +47,9 @@ public class CommentLikeServiceImpl implements CommentLikeService {
     public List<String> getUsernamesWhoLikedComment(Long commentId) {
         return commentLikeMapper.findUsernamesWhoLikedComment(commentId);
     }
+
+    @Override
+    public boolean hasUserLikedComment(Long commentId, Long userId) {
+        return commentLikeMapper.hasUserLikedComment(commentId, userId);
+    }
 }

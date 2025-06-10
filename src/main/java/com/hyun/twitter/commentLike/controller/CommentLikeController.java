@@ -1,9 +1,11 @@
 package com.hyun.twitter.commentLike.controller;
 
 import com.hyun.twitter.commentLike.service.CommentLikeService;
+import com.hyun.twitter.user.service.impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +33,13 @@ public class CommentLikeController {
     public ResponseEntity<List<String>> getUsersWhoLikedComment(@RequestParam Long commentId) {
         List<String> usernames = commentLikeService.getUsernamesWhoLikedComment(commentId);
         return ResponseEntity.ok(usernames);
+    }
+
+    @GetMapping("/liked")
+    public ResponseEntity<Boolean> hasUserLikedComment(@RequestParam Long commentId,
+                                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        boolean liked = commentLikeService.hasUserLikedComment(commentId, userId);
+        return ResponseEntity.ok(liked);
     }
 }
