@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
