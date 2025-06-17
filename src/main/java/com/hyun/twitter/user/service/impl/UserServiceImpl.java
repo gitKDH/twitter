@@ -51,28 +51,22 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("유저를 찾을 수 없습니다.");
         }
 
-        // 현재 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
             throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
         }
 
-        // 최근 3개 비밀번호 조회
         List<PasswordHistory> recentPasswords = passwordHistoryMapper.findRecentPasswords(userId);
 
-        // 새 비밀번호가 최근 사용한 것과 중복인지 확인
         for (PasswordHistory history : recentPasswords) {
             if (passwordEncoder.matches(dto.getNewPassword(), history.getPasswordHash())) {
                 throw new IllegalArgumentException("최근 3회 사용한 비밀번호는 사용할 수 없습니다.");
             }
         }
 
-        // 새 비밀번호 해시화
         String newPasswordHash = passwordEncoder.encode(dto.getNewPassword());
 
-        // User 테이블 비밀번호 업데이트
         userMapper.updatePassword(userId, newPasswordHash);
 
-        // PasswordHistory에 추가
         PasswordHistory history = PasswordHistory.builder()
                 .userId(userId)
                 .passwordHash(newPasswordHash)

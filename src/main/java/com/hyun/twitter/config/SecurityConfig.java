@@ -27,16 +27,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
+                .csrf(AbstractHttpConfigurer::disable)
 
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 안 함
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/user/login", "/api/user/create").permitAll()
-                        .requestMatchers("/api/user/me","api/user/password").authenticated() // 먼저 인증 필요 설정
-                        .requestMatchers("/api/**").permitAll() // 그 외 나머지는 임시 허용
+                        .requestMatchers("/api/user/me","api/user/password").authenticated()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

@@ -3,10 +3,8 @@ package com.hyun.twitter.post.service.impl;
 import com.hyun.twitter.post.entity.Post;
 import com.hyun.twitter.post.service.PostService;
 import com.hyun.twitter.post.mapper.PostMapper;
-import com.hyun.twitter.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
