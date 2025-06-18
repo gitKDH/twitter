@@ -45,7 +45,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String token = userService.login(loginRequestDto);
         response.setHeader("Authorization", "Bearer " + token);
-        return ResponseEntity.ok("로그인 성공");
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping("/me")
