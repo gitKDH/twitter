@@ -20,6 +20,7 @@ const Login = () => {
             const token = await res.text();
             localStorage.setItem("token", token);
             alert("로그인 성공!");
+            window.location.href = "/home";
         } else {
             alert("로그인 실패!");
         }
