@@ -21,13 +21,17 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/create")
-    public int addPost(@RequestParam Long userId, @RequestBody PostDto postDto) {
+    public int addPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                       @RequestBody PostDto postDto) {
+        Long userId = userDetails.getId();
+
         log.info("createPost by userId: {}", userId);
 
         Post newPost = Post.builder()
                 .userId(userId)
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
+                .imgUrl(postDto.getImgUrl())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -63,5 +67,11 @@ public class PostController {
     public List<Post> getFollowFeed(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         return postService.getPostsByFollowing(userId);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
+        Post post = postService.findPostById(postId);
+        return ResponseEntity.ok(post);
     }
 }

@@ -51,4 +51,13 @@ public class PostServiceImpl implements PostService {
     public List<Post> getPostsByFollowing(Long userId) {
         return postMapper.findPostsByFollowing(userId);
     }
+
+    @Override
+    public Post findPostById(Long postId) {
+        Post post = postMapper.findByPostId(postId);
+        if (post == null) {
+            throw new IllegalArgumentException("게시물을 찾을 수 없습니다.");
+        }
+        return post;
+    }
 }

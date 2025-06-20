@@ -12,4 +12,6 @@ public interface PostService {
     List<Post> getAllPosts();
     List<Post> getPostsByFollowing(Long userId);
 
+    Post findPostById(Long postId);
+
 }
