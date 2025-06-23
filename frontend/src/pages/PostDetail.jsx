@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const PostDetail = () => {
-    const { id } = useParams(); // 게시물 ID 추출
+    const { postId } = useParams();
     const [post, setPost] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
 
-        fetch(`http://localhost:8080/api/post/${id}`, {
+        fetch(`http://localhost:8080/api/post/${postId}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -20,7 +20,7 @@ const PostDetail = () => {
             })
             .then((data) => setPost(data))
             .catch((err) => console.error(err));
-    }, [id]);
+    }, [postId]);
 
     if (!post) return <p>불러오는 중...</p>;
 

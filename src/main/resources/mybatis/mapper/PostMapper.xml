@@ -3,7 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyun.twitter.post.mapper.PostMapper">
-    <select id="findByPostId" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
+    <resultMap id="PostResultMap" type="com.hyun.twitter.post.entity.Post">
+        <id column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+    <select id="findByPostId" parameterType="long" resultMap="PostResultMap">
         SELECT * FROM Posts WHERE post_id = #{postId}
     </select>
 
@@ -39,15 +48,15 @@
         delete from Posts where post_id = #{postId}
     </delete>
 
-    <select id="findAllPosts" resultType="com.hyun.twitter.post.entity.Post">
+    <select id="findAllPosts" resultMap="PostResultMap">
         SELECT * FROM Posts
         ORDER BY created_at DESC
     </select>
 
-    <select id="findPostsByFollowing" parameterType="long" resultType="com.hyun.twitter.post.entity.Post">
-        SELECT p.*
+    <select id="findPostsByFollowing" parameterType="long" resultMap="PostResultMap">
+        SELECT p.post_id, p.user_id, p.title, p.content, p.img_url, p.created_at, p.updated_at
         FROM posts p
-                 JOIN follows f ON p.user_id = f.following_id
+                 JOIN follows f ON p.user_id = f.follower_id
         WHERE f.follower_id = #{userId}
         ORDER BY p.created_at DESC
     </select>

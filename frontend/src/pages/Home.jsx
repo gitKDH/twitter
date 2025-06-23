@@ -35,12 +35,16 @@ function Home() {
     return (
         <div>
             <h2>타임라인</h2>
-            {posts.map((post, index) => (
-                <div key={post.postId ?? index}>
-                    <h3>{post.title}</h3>
-                    <p>{post.content}</p>
-                </div>
-            ))}
+            {posts.map((post) => {
+                console.log("post:", post);
+                return (
+                    <div key={post.postId}>
+                        <a href={`/post/${post.postId}`}>{post.title}</a>
+                        <p>{post.content}</p>
+                        {post.imgUrl && <img src={post.imgUrl} alt="post-img" width="300"/>}
+                    </div>
+                );
+            })}
         </div>
     );
 }
