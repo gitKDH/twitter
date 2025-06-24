@@ -18,9 +18,11 @@ public class PostLikeController {
     private final PostLikeService postLikeService;
 
     @PostMapping("/addpostlike")
-    public ResponseEntity<String> postLike(@RequestParam Long postId, @RequestParam Long userId) {
+    public ResponseEntity<String> addPostLike(@RequestParam Long postId,
+                                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
         postLikeService.addPostLike(postId, userId);
-        return ResponseEntity.ok("게시물 좋아요");
+        return ResponseEntity.ok("좋아요 완료");
     }
 
     @DeleteMapping("/unlikepost")

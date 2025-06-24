@@ -16,22 +16,9 @@
         SELECT * FROM Posts WHERE post_id = #{postId}
     </select>
 
-    <insert id="addPost" parameterType="com.hyun.twitter.post.entity.Post">
-        insert into Posts
-        (post_id,
-         user_id,
-         title,
-         content,
-         img_url,
-         created_at)
-        values(
-                #{postId},
-                #{userId},
-                #{title},
-                #{content},
-                #{imgUrl},
-                now()
-              )
+    <insert id="addPostLike">
+        INSERT INTO post_likes (post_id, user_id, created_at)
+        VALUES (#{postId}, #{userId}, NOW())
     </insert>
 
     <update id="updatePost" parameterType="com.hyun.twitter.post.entity.Post">

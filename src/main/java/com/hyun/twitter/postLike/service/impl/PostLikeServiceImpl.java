@@ -22,11 +22,16 @@ public class PostLikeServiceImpl implements PostLikeService {
     @Transactional
     @Override
     public void addPostLike(Long postId, Long userId) {
+        boolean alreadyLiked = postLikeMapper.hasUserLikedPost(postId, userId);
+        if (alreadyLiked) {
+            throw new IllegalArgumentException("이미 좋아요한 게시물입니다.");
+        }
         PostLike postLike = PostLike.builder()
                 .postId(postId)
                 .userId(userId)
                 .createdAt(LocalDateTime.now())
                 .build();
+
         postLikeMapper.addPostLike(postLike);
     }
 

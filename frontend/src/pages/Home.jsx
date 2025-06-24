@@ -21,7 +21,7 @@ function Home() {
             });
 
             if (res.ok) {
-                const data = await res.json()
+                const data = await res.json();
                 console.log("받아온 게시물 목록:", data);
                 setPosts(data);
             } else {
@@ -36,12 +36,12 @@ function Home() {
         <div>
             <h2>타임라인</h2>
             {posts.map((post) => {
-                console.log("post:", post);
+                console.log("post:", post); // 🔍 여기서 postId 확인 가능
                 return (
                     <div key={post.postId}>
                         <a href={`/post/${post.postId}`}>{post.title}</a>
                         <p>{post.content}</p>
-                        {post.imgUrl && <img src={post.imgUrl} alt="post-img" width="300"/>}
+                        {post.imgUrl && <img src={post.imgUrl} alt="post-img" width="300" />}
                     </div>
                 );
             })}
