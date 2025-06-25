@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,15 +24,17 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int updateComment(Comment comment) {
         Comment existingComment = commentMapper.findByCommentId(comment.getCommentId());
-        log.info("조회하려는 commentId: {}", comment.getCommentId());
-        log.info("조회된 댓글: {}", existingComment);
+
         if (existingComment == null) {
             throw new IllegalArgumentException("댓글을 찾을 수 없습니다.");
         }
+
         Comment updateComment = Comment.builder()
+                .commentId(comment.getCommentId())
                 .content(comment.getContent() != null ? comment.getContent() : existingComment.getContent())
                 .build();
-        return commentMapper.updateComment(comment);
+
+        return commentMapper.updateComment(updateComment);
     }
 
     @Override
@@ -42,4 +46,10 @@ public class CommentServiceImpl implements CommentService {
 
         return commentMapper.deleteComment(commentId);
     }
+
+    @Override
+    public List<Comment> getCommentsByPostId(Long postId) {
+        return commentMapper.findCommentsByPostId(postId);
+    }
+
 }

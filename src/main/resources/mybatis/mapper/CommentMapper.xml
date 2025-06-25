@@ -3,8 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyun.twitter.comment.mapper.CommentMapper">
+    <resultMap id="CommentResultMap" type="com.hyun.twitter.comment.entity.Comment">
+        <id column="comment_id" property="commentId"/>
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="content" property="content"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
     <select id="findByCommentId" parameterType="long" resultType="com.hyun.twitter.comment.entity.Comment">
         SELECT * FROM Comments WHERE comment_id = #{commentId}
+    </select>
+    <select id="findCommentsByPostId" parameterType="long" resultMap="CommentResultMap">
+        SELECT * FROM comments WHERE post_id = #{postId} ORDER BY created_at ASC
     </select>
     <insert id="addComment" parameterType="com.hyun.twitter.comment.entity.Comment">
         insert into Comments

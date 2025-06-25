@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -35,7 +36,7 @@ public class CommentController {
         log.info("updateComment by commentId : {}", commentId);
 
         Comment updateComment = Comment.builder()
-                .commentId(commentDto.getCommentId())
+                .commentId(commentId)
                 .content(commentDto.getContent())
                 .build();
 
@@ -46,6 +47,11 @@ public class CommentController {
     public int deleteComment(@RequestParam Long commentId) {
         log.info("delete comment");
         return commentService.deleteComment(commentId);
+    }
+
+    @GetMapping("/list")
+    public List<Comment> getComments(@RequestParam Long postId) {
+        return commentService.getCommentsByPostId(postId);
     }
 
 }
