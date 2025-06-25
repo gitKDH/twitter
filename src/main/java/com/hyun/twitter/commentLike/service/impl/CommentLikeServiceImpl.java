@@ -29,18 +29,8 @@ public class CommentLikeServiceImpl implements CommentLikeService {
     }
 
     @Override
-    @Transactional
-    public int unlikeComment(Long commentLikeId) {
-        log.info("찾는 commentLikeId: {}", commentLikeId);
-
-        CommentLike existingCommentLike = commentLikeMapper.findByCommentLikeId(commentLikeId);
-
-        if (existingCommentLike == null) {
-            throw new IllegalArgumentException("좋아요 관계를 찾을 수 없습니다.");
-        }
-
-        log.info("반환된 CommentLike 객체: {}", existingCommentLike);
-        return commentLikeMapper.unlikeComment(commentLikeId);
+    public void unlikeComment(Long commentId, Long userId) {
+        commentLikeMapper.unlikeComment(commentId, userId);
     }
 
     @Override
@@ -51,5 +41,10 @@ public class CommentLikeServiceImpl implements CommentLikeService {
     @Override
     public boolean hasUserLikedComment(Long commentId, Long userId) {
         return commentLikeMapper.hasUserLikedComment(commentId, userId);
+    }
+
+    @Override
+    public int countCommentLikes(Long commentId) {
+        return commentLikeMapper.countCommentLikes(commentId);
     }
 }

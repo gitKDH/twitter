@@ -10,7 +10,8 @@ import java.util.List;
 public interface CommentLikeMapper {
     void addCommentLike(CommentLike commentLike);
     CommentLike findByCommentLikeId(@Param("commentLikeId") Long commentLikeId);
-    int unlikeComment(@Param("commentLikeId") Long commentLikeId);
+    int unlikeComment(@Param("commentId") Long commentId, @Param("userId") Long userId);
     List<String> findUsernamesWhoLikedComment(@Param("commentId") Long commentId);
     boolean hasUserLikedComment(@Param("commentId") Long commentId, @Param("userId") Long userId);
+    int countCommentLikes(Long commentId);
 }

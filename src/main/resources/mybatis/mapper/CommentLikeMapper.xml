@@ -26,8 +26,10 @@
                    NOW()
                )
     </insert>
-    <delete id="unlikeComment" parameterType="Long">
-        delete from Comment_likes where comment_like_id = #{commentLikeId}
+
+    <delete id="unlikeComment">
+        DELETE FROM comment_likes
+        WHERE comment_id = #{commentId} AND user_id = #{userId}
     </delete>
 
     <select id="findUsernamesWhoLikedComment" parameterType="long" resultType="string">
@@ -42,5 +44,9 @@
             SELECT 1 FROM comment_likes
             WHERE comment_id = #{commentId} AND user_id = #{userId}
         )
+    </select>
+
+    <select id="countCommentLikes" parameterType="long" resultType="int">
+        SELECT COUNT(*) FROM comment_likes WHERE comment_id = #{commentId}
     </select>
 </mapper>

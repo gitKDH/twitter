@@ -18,15 +18,19 @@ public class CommentLikeController {
     private final CommentLikeService commentLikeService;
 
     @PostMapping("/addcommentlike")
-    public ResponseEntity<String> commentLike(@RequestParam Long commentId, @RequestParam Long userId) {
+    public ResponseEntity<String> addCommentLike(@RequestParam Long commentId,
+                                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
         commentLikeService.addCommentLike(commentId, userId);
-        return ResponseEntity.ok("댓글 좋아요");
+        return ResponseEntity.ok("댓글 좋아요 성공");
     }
 
     @DeleteMapping("/unlikecomment")
-    public int unlikeComment(@RequestParam Long commentLikeId) {
-        log.info("unlikeComment");
-        return commentLikeService.unlikeComment(commentLikeId);
+    public ResponseEntity<String> unlikeComment(@RequestParam Long commentId,
+                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        commentLikeService.unlikeComment(commentId, userId);
+        return ResponseEntity.ok("댓글 좋아요 취소 완료");
     }
 
     @GetMapping("/liked-users")
@@ -41,5 +45,11 @@ public class CommentLikeController {
         Long userId = userDetails.getId();
         boolean liked = commentLikeService.hasUserLikedComment(commentId, userId);
         return ResponseEntity.ok(liked);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countCommentLikes(@RequestParam Long commentId) {
+        int count = commentLikeService.countCommentLikes(commentId);
+        return ResponseEntity.ok(count);
     }
 }

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 const PostDetail = () => {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
-    const [liked, setLiked] = useState(false); // 좋아요 상태
+    const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
@@ -21,7 +21,6 @@ const PostDetail = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
             if (res.ok) {
                 const data = await res.json();
                 setPost(data);
@@ -36,7 +35,7 @@ const PostDetail = () => {
             });
             if (res.ok) {
                 const data = await res.json();
-                setLiked(data); // true or false
+                setLiked(data);
             }
         };
 
@@ -54,23 +53,50 @@ const PostDetail = () => {
         fetchComments();
     }, [postId]);
 
+    const fetchComments = async () => {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(`http://localhost:8080/api/comment/list?postId=${postId}`);
+        if (res.ok) {
+            const data = await res.json();
+
+            const enrichedComments = await Promise.all(
+                data.map(async (comment) => {
+                    const countRes = await fetch(`http://localhost:8080/api/commentlike/count?commentId=${comment.commentId}`);
+                    const likeCount = countRes.ok ? await countRes.json() : 0;
+
+                    const likedRes = await fetch(`http://localhost:8080/api/commentlike/liked?commentId=${comment.commentId}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    const liked = likedRes.ok ? await likedRes.json() : false;
+
+                    return {
+                        ...comment,
+                        likeCount,
+                        liked,
+                    };
+                })
+            );
+
+            setComments(enrichedComments);
+        }
+    };
+
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
 
-        if (!token) return;
-
         const res = await fetch(
-            `http://localhost:8080/api/comment/create?postId=${postId}&userId=8`, // 여기서 userId는 나중에 백엔드에서 토큰으로 처리할 수도 있어!
+            `http://localhost:8080/api/comment/create?postId=${postId}&userId=8`, // 추후 userId는 토큰에서 추출
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    content: newComment,
-                }),
+                body: JSON.stringify({ content: newComment }),
             }
         );
 
@@ -79,43 +105,6 @@ const PostDetail = () => {
             fetchComments();
         } else {
             alert("댓글 작성 실패");
-        }
-    };
-
-    const handleLikeToggle = async () => {
-        const token = localStorage.getItem("token");
-
-        if (!token) return;
-
-        if (liked) {
-            const res = await fetch(
-                `http://localhost:8080/api/postlike/unlikepost?postId=${postId}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (res.ok) {
-                setLiked(false);
-                setLikeCount((prev) => prev - 1);
-            }
-        } else {
-            // 좋아요 등록
-            const res = await fetch(
-                `http://localhost:8080/api/postlike/addpostlike?postId=${postId}`,
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (res.ok) {
-                setLiked(true);
-                setLikeCount((prev) => prev + 1);
-            }
         }
     };
 
@@ -140,7 +129,7 @@ const PostDetail = () => {
         if (res.ok) {
             setEditingCommentId(null);
             setEditedContent("");
-            fetchComments(); // 댓글 새로고침
+            fetchComments();
         } else {
             alert("수정 실패");
         }
@@ -148,8 +137,6 @@ const PostDetail = () => {
 
     const handleDeleteComment = async (commentId) => {
         const token = localStorage.getItem("token");
-        if (!token) return;
-
         const confirmed = window.confirm("댓글을 삭제하시겠습니까?");
         if (!confirmed) return;
 
@@ -162,17 +149,61 @@ const PostDetail = () => {
 
         if (res.ok) {
             alert("댓글이 삭제되었습니다.");
-            fetchComments(); // 삭제 후 다시 댓글 목록 불러오기
+            fetchComments();
         } else {
             alert("댓글 삭제 실패");
         }
     };
 
-    const fetchComments = async () => {
-        const res = await fetch(`http://localhost:8080/api/comment/list?postId=${postId}`);
+    const handleCommentLikeToggle = async (index) => {
+        const token = localStorage.getItem("token");
+        const comment = comments[index];
+
+        if (!token || comment.liked === undefined) return;
+
+        const url = comment.liked
+            ? `http://localhost:8080/api/commentlike/unlikecomment?commentId=${comment.commentId}`
+            : `http://localhost:8080/api/commentlike/addcommentlike?commentId=${comment.commentId}`;
+        const method = comment.liked ? "DELETE" : "POST";
+
+        const res = await fetch(url, {
+            method,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
         if (res.ok) {
-            const data = await res.json();
-            setComments(data);
+            const updated = [...comments];
+            updated[index] = {
+                ...comment,
+                liked: !comment.liked,
+                likeCount: comment.liked ? comment.likeCount - 1 : comment.likeCount + 1,
+            };
+            setComments(updated);
+        }
+    };
+
+    const handleLikeToggle = async () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) return;
+
+        const url = liked
+            ? `http://localhost:8080/api/postlike/unlikepost?postId=${postId}`
+            : `http://localhost:8080/api/postlike/addpostlike?postId=${postId}`;
+        const method = liked ? "DELETE" : "POST";
+
+        const res = await fetch(url, {
+            method,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (res.ok) {
+            setLiked(!liked);
+            setLikeCount((prev) => prev + (liked ? -1 : 1));
         }
     };
 
@@ -189,37 +220,45 @@ const PostDetail = () => {
                 {liked ? "좋아요 취소" : "좋아요"}
             </button>
 
+            <h3>댓글</h3>
             {comments.length > 0 ? (
-                <div>
-                    <h3>댓글</h3>
-                    <ul>
-                        {comments.map((comment) => (
-                            <li key={comment.commentId}>
-                                <strong>{comment.username}</strong>:
-                                {editingCommentId === comment.commentId ? (
-                                    <form onSubmit={handleEditSubmit} style={{ display: "inline" }}>
-                                        <input
-                                            type="text"
-                                            value={editedContent}
-                                            onChange={(e) => setEditedContent(e.target.value)}
-                                        />
-                                        <button type="submit">저장</button>
-                                        <button onClick={() => setEditingCommentId(null)}>취소</button>
-                                    </form>
-                                ) : (
-                                    <>
-                                        {comment.content}
-                                        <button onClick={() => handleEditClick(comment)}>수정</button>
-                                        <button onClick={() => handleDeleteComment(comment.commentId)}>삭제</button>
-                                    </>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <ul>
+                    {comments.map((comment, index) => (
+                        <li key={comment.commentId}>
+                            <strong>{comment.username}</strong>:
+                            {editingCommentId === comment.commentId ? (
+                                <form onSubmit={handleEditSubmit} style={{ display: "inline" }}>
+                                    <input
+                                        type="text"
+                                        value={editedContent}
+                                        onChange={(e) => setEditedContent(e.target.value)}
+                                    />
+                                    <button type="submit">저장</button>
+                                    <button type="button" onClick={() => setEditingCommentId(null)}>취소</button>
+                                </form>
+                            ) : (
+                                <>
+                                    {comment.content}
+                                    <button onClick={() => handleEditClick(comment)}>수정</button>
+                                    <button onClick={() => handleDeleteComment(comment.commentId)}>삭제</button>
+                                </>
+                            )}
+                            <div>
+                                ❤️ {comment.likeCount ?? 0}개
+                                <button
+                                    onClick={() => handleCommentLikeToggle(index)}
+                                    disabled={comment.liked === undefined}
+                                >
+                                    {comment.liked ? "좋아요 취소" : "좋아요"}
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             ) : (
                 <p>댓글이 없습니다.</p>
             )}
+
             <form onSubmit={handleCommentSubmit}>
                 <input
                     type="text"
@@ -232,9 +271,6 @@ const PostDetail = () => {
             </form>
         </div>
     );
-
-
 };
-
 
 export default PostDetail;
