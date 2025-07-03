@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const PostDetail = () => {
+    const navigate = useNavigate();
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [liked, setLiked] = useState(false);
@@ -219,6 +222,7 @@ const PostDetail = () => {
             <button onClick={handleLikeToggle}>
                 {liked ? "좋아요 취소" : "좋아요"}
             </button>
+            <button onClick={() => navigate(`/post/edit/${post.postId}`)}>수정</button>
 
             <h3>댓글</h3>
             {comments.length > 0 ? (
@@ -269,6 +273,9 @@ const PostDetail = () => {
                 />
                 <button type="submit">작성</button>
             </form>
+            <button onClick={() => navigate("/home")}>
+                목록으로 돌아가기
+            </button>
         </div>
     );
 };
