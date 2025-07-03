@@ -1,6 +1,7 @@
 package com.hyun.twitter.user.controller;
 
 import com.hyun.twitter.user.dto.*;
+import com.hyun.twitter.user.entity.User;
 import com.hyun.twitter.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:5173")
@@ -63,5 +66,10 @@ public class UserController {
         userService.updateUserProfile(email, requestDto);
 
         return ResponseEntity.ok("프로필 수정.");
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }

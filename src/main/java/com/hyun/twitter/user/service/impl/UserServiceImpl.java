@@ -128,4 +128,9 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUserProfile(updatedUser);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.findAllUsers();
+    }
+
 }

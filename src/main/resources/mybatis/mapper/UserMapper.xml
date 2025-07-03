@@ -61,6 +61,11 @@
         </set>
         WHERE user_id = #{userId}
     </update>
+
+    <select id="findAllUsers" resultType="com.hyun.twitter.user.entity.User">
+        SELECT user_id, username, email, bio, created_at
+        FROM users
+    </select>
 </mapper>
 
 

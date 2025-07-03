@@ -7,6 +7,8 @@ import com.hyun.twitter.user.dto.UserRequestDto;
 import com.hyun.twitter.user.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserService {
     int addUser(UserRequestDto requestDto);
     int deleteUser(@Param("userId") Long userId);
@@ -17,4 +19,5 @@ public interface UserService {
 
     void updateUserProfile(String email, UserProfileUpdateRequestDto requestDto);
 
+    List<User> getAllUsers();
 }
