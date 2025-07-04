@@ -1,6 +1,5 @@
 package com.hyun.twitter.follow.controller;
 
-
 import com.hyun.twitter.follow.service.FollowService;
 import com.hyun.twitter.user.service.impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -17,18 +18,25 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/follow")
-    public ResponseEntity<String> followUser(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                             @RequestParam Long followingId) {
+    public ResponseEntity<String> followUser(@RequestParam Long followingId,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long followerId = userDetails.getId();
         followService.followUser(followerId, followingId);
-        return ResponseEntity.ok("팔로우");
+        return ResponseEntity.ok("팔로우 완료");
     }
 
-    @DeleteMapping("/unfollow")
-    public int unfollowUser(@RequestParam Long followId) {
-        log.info("unfollow");
-        return followService.unfollowUser(followId);
+    @DeleteMapping("/unfollow-by-userid")
+    public ResponseEntity<String> unfollowByUserId(@RequestParam Long followingId,
+                                                   @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long followerId = userDetails.getId();
+        followService.unfollowByUserId(followerId, followingId);
+        return ResponseEntity.ok("언팔로우 완료");
     }
 
-
+    @GetMapping("/following")
+    public ResponseEntity<List<Long>> getFollowings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        List<Long> followingIds = followService.getFollowingsByUserId(userId);
+        return ResponseEntity.ok(followingIds);
+    }
 }

@@ -1,9 +1,11 @@
 package com.hyun.twitter.follow.service;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 public interface FollowService {
     void followUser(Long followerId, Long followingId);
-    int unfollowUser(@Param("followId") Long followId);
 
+    void unfollowByUserId(Long followerId, Long followingId);
+
+    List<Long> getFollowingsByUserId(Long userId);
 }

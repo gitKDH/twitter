@@ -2,7 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.hyun.twitter.follow.mapper.FollowMapper">
+
     <resultMap id="FollowResultMap" type="com.hyun.twitter.follow.entity.Follow">
         <id column="follow_id" property="followId"/>
         <result column="follower_id" property="followerId"/>
@@ -10,24 +12,24 @@
         <result column="created_at" property="createdAt"/>
     </resultMap>
 
-    <select id="findByFollowId" parameterType="java.lang.Long" resultMap="FollowResultMap">
+    <select id="findByFollowId" parameterType="long" resultMap="FollowResultMap">
         SELECT * FROM follows WHERE follow_id = #{followId}
     </select>
 
     <insert id="followUser" parameterType="com.hyun.twitter.follow.entity.Follow">
-        insert into follows
-        (follow_id,
-         follower_id,
-         following_id,
-         created_at)
-        values (
-                #{followId},
-                #{followerId},
-                #{followingId},
-                NOW()
-               )
+        INSERT INTO follows (follower_id, following_id, created_at)
+        VALUES (#{followerId}, #{followingId}, #{createdAt})
     </insert>
-    <delete id="unfollowUser" parameterType="Long">
-        delete from follows where follow_id = #{followId}
+
+    <delete id="unfollowByUserId">
+        DELETE FROM follows
+        WHERE follower_id = #{followerId} AND following_id = #{followingId}
     </delete>
+
+    <select id="findFollowingsByUserId" parameterType="long" resultType="long">
+        SELECT following_id
+        FROM follows
+        WHERE follower_id = #{userId}
+    </select>
+
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,20 +30,16 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional
-    public int unfollowUser(Long followId) {
-        log.info("찾는 followId: {}", followId);
-
-        Follow existingFollow = followMapper.findByFollowId(followId);
-
-        if (existingFollow == null) {
-            throw new IllegalArgumentException("팔로우 관계를 찾을 수 없습니다.");
+    public void unfollowByUserId(Long followerId, Long followingId) {
+        int result = followMapper.unfollowByUserId(followerId, followingId);
+        if (result == 0) {
+            throw new IllegalArgumentException("팔로우 관계가 존재하지 않습니다.");
         }
+    }
 
-        log.info("반환된 Follow 객체: {}", existingFollow);
-        log.info("Follow ID: {}", existingFollow.getFollowId());
-        log.info("Follower ID: {}", existingFollow.getFollowerId());
-        log.info("Following ID: {}", existingFollow.getFollowingId());
-
-        return followMapper.unfollowUser(followId);
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> getFollowingsByUserId(Long userId) {
+        return followMapper.findFollowingsByUserId(userId);
     }
 }
