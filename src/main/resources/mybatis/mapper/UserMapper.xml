@@ -62,7 +62,7 @@
         WHERE user_id = #{userId}
     </update>
 
-    <select id="findAllUsers" resultType="com.hyun.twitter.user.entity.User">
+    <select id="findAllUsers" resultMap="UserResultMap">
         SELECT user_id, username, email, bio, created_at
         FROM users
     </select>

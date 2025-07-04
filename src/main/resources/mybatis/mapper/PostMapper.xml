@@ -41,9 +41,9 @@
     </select>
 
     <select id="findPostsByFollowing" parameterType="long" resultMap="PostResultMap">
-        SELECT p.post_id, p.user_id, p.title, p.content, p.img_url, p.created_at, p.updated_at
+        SELECT DISTINCT p.post_id, p.user_id, p.title, p.content, p.img_url, p.created_at, p.updated_at
         FROM posts p
-                 JOIN follows f ON p.user_id = f.follower_id
+                 JOIN follows f ON p.user_id = f.following_id
         WHERE f.follower_id = #{userId}
         ORDER BY p.created_at DESC
     </select>
