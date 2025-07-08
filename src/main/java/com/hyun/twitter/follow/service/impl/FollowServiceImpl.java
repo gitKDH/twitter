@@ -3,6 +3,8 @@ package com.hyun.twitter.follow.service.impl;
 import com.hyun.twitter.follow.entity.Follow;
 import com.hyun.twitter.follow.mapper.FollowMapper;
 import com.hyun.twitter.follow.service.FollowService;
+import com.hyun.twitter.user.dto.UserResponseDto;
+import com.hyun.twitter.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,13 @@ public class FollowServiceImpl implements FollowService {
     @Transactional(readOnly = true)
     public List<Long> getFollowingsByUserId(Long userId) {
         return followMapper.findFollowingsByUserId(userId);
+    }
+
+    @Override
+    public List<UserResponseDto> getFollowers(Long userId) {
+        List<User> followers = followMapper.findFollowersByUserId(userId);
+        return followers.stream()
+                .map(user -> new UserResponseDto(user.getUsername(), user.getBio(), user.getEmail()))
+                .toList();
     }
 }

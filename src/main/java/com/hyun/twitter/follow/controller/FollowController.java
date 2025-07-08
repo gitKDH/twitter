@@ -1,6 +1,7 @@
 package com.hyun.twitter.follow.controller;
 
 import com.hyun.twitter.follow.service.FollowService;
+import com.hyun.twitter.user.dto.UserResponseDto;
 import com.hyun.twitter.user.service.impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,5 +39,12 @@ public class FollowController {
         Long userId = userDetails.getId();
         List<Long> followingIds = followService.getFollowingsByUserId(userId);
         return ResponseEntity.ok(followingIds);
+    }
+
+    @GetMapping("/followers")
+    public ResponseEntity<List<UserResponseDto>> getFollowers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        List<UserResponseDto> followers = followService.getFollowers(userId);
+        return ResponseEntity.ok(followers);
     }
 }

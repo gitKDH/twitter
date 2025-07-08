@@ -1,6 +1,7 @@
 package com.hyun.twitter.follow.mapper;
 
 import com.hyun.twitter.follow.entity.Follow;
+import com.hyun.twitter.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,5 @@ public interface FollowMapper {
     Follow findByFollowId(@Param("followId") Long followId);
 
     List<Long> findFollowingsByUserId(@Param("userId") Long userId);
+    List<User> findFollowersByUserId(@Param("userId") Long userId);
 }

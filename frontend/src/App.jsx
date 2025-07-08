@@ -6,6 +6,7 @@ import CreatePost from "./pages/CreatePost.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import EditPost from "./pages/EditPost.jsx";
 import UserList from "./pages/UserList.jsx";
+import MyProfile from "./pages/MyProfile.jsx";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/post/:postId" element={<PostDetail />} />
                 <Route path="/post/edit/:postId" element={<EditPost />} />
                 <Route path="/users" element={<UserList />} />
+                <Route path="/me" element={<MyProfile />} />
             </Routes>
         </Router>
     );

@@ -32,4 +32,11 @@
         WHERE follower_id = #{userId}
     </select>
 
+    <select id="findFollowersByUserId" parameterType="long" resultType="com.hyun.twitter.user.entity.User">
+        SELECT u.*
+        FROM follows f
+                 JOIN users u ON f.follower_id = u.user_id
+        WHERE f.following_id = #{userId}
+    </select>
+
 </mapper>

@@ -1,5 +1,7 @@
 package com.hyun.twitter.follow.service;
 
+import com.hyun.twitter.user.dto.UserResponseDto;
+
 import java.util.List;
 
 public interface FollowService {
@@ -8,4 +10,5 @@ public interface FollowService {
     void unfollowByUserId(Long followerId, Long followingId);
 
     List<Long> getFollowingsByUserId(Long userId);
+    List<UserResponseDto> getFollowers(Long userId);
 }

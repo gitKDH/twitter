@@ -53,8 +53,8 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        return ResponseEntity.ok(new UserResponseDto(username));
+        Long userId = userService.findByEmail(userDetails.getUsername()).getUserId();
+        return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 
     @PatchMapping("/profile")

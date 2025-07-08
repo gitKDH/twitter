@@ -3,10 +3,7 @@ package com.hyun.twitter.user.service.impl;
 import com.hyun.twitter.config.JwtUtil;
 import com.hyun.twitter.passwordHistory.entity.PasswordHistory;
 import com.hyun.twitter.passwordHistory.mapper.PasswordHistoryMapper;
-import com.hyun.twitter.user.dto.LoginRequestDto;
-import com.hyun.twitter.user.dto.PasswordChangeRequestDto;
-import com.hyun.twitter.user.dto.UserProfileUpdateRequestDto;
-import com.hyun.twitter.user.dto.UserRequestDto;
+import com.hyun.twitter.user.dto.*;
 import com.hyun.twitter.user.entity.User;
 import com.hyun.twitter.user.mapper.UserMapper;
 import com.hyun.twitter.user.service.UserService;
@@ -131,6 +128,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userMapper.findAllUsers();
+    }
+
+    @Override
+    public UserResponseDto getUserInfo(Long userId) {
+        User user = userMapper.findByUserId(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+        return new UserResponseDto(user.getUsername(), user.getBio(), user.getEmail());
     }
 
 }
