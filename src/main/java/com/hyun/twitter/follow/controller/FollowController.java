@@ -35,9 +35,9 @@ public class FollowController {
     }
 
     @GetMapping("/following")
-    public ResponseEntity<List<Long>> getFollowings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<UserResponseDto>> getFollowings(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
-        List<Long> followingIds = followService.getFollowingsByUserId(userId);
+        List<UserResponseDto> followingIds = followService.getFollowings(userId);
         return ResponseEntity.ok(followingIds);
     }
 

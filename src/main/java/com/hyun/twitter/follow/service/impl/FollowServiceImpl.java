@@ -40,9 +40,11 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Long> getFollowingsByUserId(Long userId) {
-        return followMapper.findFollowingsByUserId(userId);
+    public List<UserResponseDto> getFollowings(Long userId) {
+        List<User> followings = followMapper.findFollowingsByUserId(userId);
+        return followings.stream()
+                .map(user -> new UserResponseDto(user.getUsername(), user.getBio(), user.getEmail()))
+                .toList();
     }
 
     @Override
