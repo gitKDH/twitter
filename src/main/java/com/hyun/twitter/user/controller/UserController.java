@@ -72,4 +72,9 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDto> getUserProfile(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUserInfo(userId));
+    }
 }

@@ -84,7 +84,7 @@ const UserList = () => {
                     .filter((user) => user.userId !== currentUserId)
                     .map((user) => (
                         <li key={user.userId}>
-                            {user.username}{" "}
+                            <a href={`/user/${user.userId}`}>{user.username}</a> - {user.bio}
                             <button onClick={() => handleFollowToggle(user.userId)}>
                                 {followingIds.includes(user.userId) ? "팔로우 취소" : "팔로우"}
                             </button>
