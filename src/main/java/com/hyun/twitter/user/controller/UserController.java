@@ -77,4 +77,9 @@ public class UserController {
     public ResponseEntity<UserResponseDto> getUserProfile(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUserInfo(userId));
     }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserResponseDto> getUserInfo(@RequestParam Long userId) {
+        return ResponseEntity.ok(userService.getUserInfo(userId));
+    }
 }

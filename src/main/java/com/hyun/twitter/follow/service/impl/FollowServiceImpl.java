@@ -54,4 +54,9 @@ public class FollowServiceImpl implements FollowService {
                 .map(user -> new UserResponseDto(user.getUsername(), user.getBio(), user.getEmail()))
                 .toList();
     }
+
+    @Override
+    public boolean isFollowing(Long followerId, Long followingId) {
+        return followMapper.existsByFollowerAndFollowing(followerId, followingId);
+    }
 }

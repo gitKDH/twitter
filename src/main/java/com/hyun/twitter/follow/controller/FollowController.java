@@ -47,4 +47,14 @@ public class FollowController {
         List<UserResponseDto> followers = followService.getFollowers(userId);
         return ResponseEntity.ok(followers);
     }
+
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkFollowStatus(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam Long followingId
+    ) {
+        Long followerId = userDetails.getId();
+        boolean isFollowing = followService.isFollowing(followerId, followingId);
+        return ResponseEntity.ok(isFollowing);
+    }
 }

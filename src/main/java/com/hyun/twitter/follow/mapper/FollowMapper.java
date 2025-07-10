@@ -18,4 +18,6 @@ public interface FollowMapper {
 
     List<User> findFollowingsByUserId(@Param("userId") Long userId);
     List<User> findFollowersByUserId(@Param("userId") Long userId);
+
+    boolean existsByFollowerAndFollowing(@Param("followerId") Long followerId, @Param("followingId") Long followingId);
 }
