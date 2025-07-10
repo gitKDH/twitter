@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 
 function Home() {
     const [posts, setPosts] = useState([]);
@@ -6,26 +11,18 @@ function Home() {
     useEffect(() => {
         const fetchTimeline = async () => {
             const token = localStorage.getItem("token");
-
-            if (!token) {
-                console.error("토큰이 존재하지 않습니다.");
-                return;
-            }
+            if (!token) return;
 
             const res = await fetch("http://localhost:8080/api/post/timeline", {
-                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
             if (res.ok) {
                 const data = await res.json();
-                console.log("받아온 게시물 목록:", data);
                 setPosts(data);
-            } else {
-                console.error("타임라인 불러오기 실패");
             }
         };
 
@@ -33,18 +30,47 @@ function Home() {
     }, []);
 
     return (
-        <div>
-            <h2>타임라인</h2>
-            {posts.map((post) => {
-                console.log("post:", post); // 🔍 여기서 postId 확인 가능
-                return (
-                    <div key={post.postId}>
-                        <a href={`/post/${post.postId}`}>{post.title}</a>
-                        <p>{post.content}</p>
-                        {post.imgUrl && <img src={post.imgUrl} alt="post-img" width="300" />}
-                    </div>
-                );
-            })}
+        <div className="max-w-xl mx-auto mt-10 space-y-6">
+            <h2 className="text-2xl font-bold mb-4">📸 타임라인</h2>
+
+            {posts.map((post) => (
+                <Card key={post.postId} className="rounded-2xl shadow-md">
+                    <CardHeader className="flex flex-row items-center space-x-4">
+                        <Avatar>
+                            <AvatarFallback>{post.username?.charAt(0) ?? "U"}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                            <p className="font-medium">{post.username ?? "사용자"}</p>
+                            <p className="text-sm text-gray-500">{post.createdAt}</p>
+                        </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-4">
+                        <div>
+                            <p className="text-base font-semibold">{post.title}</p>
+                            <p className="text-sm text-gray-800">{post.content}</p>
+                            {post.imgUrl && (
+                                <img
+                                    src={post.imgUrl}
+                                    alt="post-img"
+                                    className="w-full h-auto mt-2 rounded-md"
+                                />
+                            )}
+                        </div>
+
+                        <Separator />
+
+                        <div className="flex justify-between items-center">
+                            <Button variant="outline" className="text-red-500">
+                                ❤️ 좋아요
+                            </Button>
+                            <Link to={`/post/${post.postId}`} className="text-sm text-blue-500">
+                                댓글 보기
+                            </Link>
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
     );
 }
